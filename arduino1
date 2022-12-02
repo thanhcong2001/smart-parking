@@ -1,1 +1,88 @@
-
+#include <Servo.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
+#include <Wire.h> 
+#include <LiquidCrystal_I2C.h>
+#define ONE_WIRE_BUS A3
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
+LiquidCrystal_I2C lcd(0X27,16,2);
+Servo servo_Vao;
+Servo servo_Ra;
+int cambien4=10;
+int soxe=0;
+int cambien5=11;
+int cambien1=4;
+int cambien2=5;
+int cambien3=6;
+void setup() {
+  Serial.begin(9600);
+  pinMode(cambien4,INPUT);
+  servo_Vao.attach(2, 500, 2500);
+  pinMode(cambien5,INPUT);
+  pinMode(7,OUTPUT);
+  pinMode(cambienAs,INPUT);
+  pinMode(5,OUTPUT);
+  servo_Ra.attach(3, 500, 2500);
+  pinMode(4,INPUT);
+  pinMode(5,INPUT);
+  pinMode(6,INPUT);
+  lcd.init();                    
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print("Tong so xe la:"); 
+  lcd.setCursor(15,0);
+  lcd.print(soxe);
+}
+void loop() {
+  int giatri1=digitalRead(cambien4);
+  if(giatri1==LOW && soxe<3 || sensors.getTempCByIndex(0)>33){
+    soxe++;
+    servo_4.write(180);
+     lcd.setCursor(0,0);
+     lcd.print("Tong so xe la:"); 
+     lcd.setCursor(15,0);
+     lcd.print(soxe);
+   delay(500);
+    }
+    else{
+   servo_4.write(90);
+      }
+  int giatri2=digitalRead(cambien5);
+  if(giatri2==LOW && soxe>0){
+    soxe--;
+    servo_5.write(180); 
+    lcd.setCursor(0,0);
+    lcd.print("Tong so xe la:"); 
+    lcd.setCursor(15,0);
+    lcd.print(soxe);
+    delay(500);
+    }
+    else{
+   servo_5.write(90);
+      }
+if(digitalRead(4)==LOW){
+  lcd.setCursor(0,1);
+  lcd.print("F1:F");
+  }
+  else{
+  lcd.setCursor(0,1);
+  lcd.print("F1:E");
+  }
+  if(digitalRead(5)==LOW){
+  lcd.setCursor(6,1);
+  lcd.print("F2:F");
+  }
+  else{
+  lcd.setCursor(6,1);
+  lcd.print("F2:E");
+  }
+  if(digitalRead(6)==LOW){
+  lcd.setCursor(11,1);
+  lcd.print("F3:F");
+  }
+  else{
+  lcd.setCursor(11,1);
+  lcd.print("F3:E");
+  }
+}
