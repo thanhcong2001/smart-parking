@@ -1,1 +1,39 @@
+int rain = 9;
+int led = 13;
+int cambienAs = A1;
+#include <Servo.h>
+Servo servo_Trai;
+Servo servo_Phai;
+int buzz = 7;
+void setup() {
+  Serial.begin(9600);
+  pinMode(rain, INPUT);
+  servo_Phai.attach(12);
+  servo_Trai.attach(8);
+  pinMode(led, OUTPUT);
+  digitalWrite(led, LOW);
+}
 
+void loop()
+{ 
+  int val = digitalRead(9);
+  if (val == HIGH) {
+    servo_Phai.write(180);
+    servo_Trai.write(0);
+  }
+  else {
+    servo_Phai.write(135);
+    servo_Trai.write(45);
+  }
+  delay(10);
+  int value = analogRead(cambienAs);
+  Serial.println(value);
+  delay(300);
+  if (value > 800) {
+    digitalWrite(13, HIGH);
+  }
+  else {
+    digitalWrite(13, LOW);
+  }
+  delay(500);
+}
